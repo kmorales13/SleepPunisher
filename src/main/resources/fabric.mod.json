@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "sleeppunisher",
+  "version": "${version}",
+
+  "name": "Sleep Punisher",
+  "description": "It shouldn't be easy to pass the night!",
+  "authors": [
+    "nt_ENX"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": ""
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/sleeppunisher/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.sleeppunisher.SleepPunisher"
+    ]
+  },
+  "mixins": [
+    "sleeppunisher.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
