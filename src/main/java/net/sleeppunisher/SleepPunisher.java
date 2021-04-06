@@ -23,7 +23,7 @@ public class SleepPunisher implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        System.out.println("[SleepPunisher] Loading...");
+        System.out.println("[SleepPunisher] Loading punishments...");
 
         initConfig();
         registerCallback();
@@ -69,7 +69,6 @@ public class SleepPunisher implements ModInitializer {
 
     private void doPunishment(ServerPlayerEntity player) {
         Integer index = Probability.randNum(inx.toArray(new Integer[0]), freq.toArray(new Integer[0]), inx.size());
-        System.out.println("[Sleep Punisher] Got: " + index);
 
         try {
             ConfigItem<?> item = punishments.get(index);
@@ -91,7 +90,6 @@ public class SleepPunisher implements ModInitializer {
     }
 
     private void killPlayer(ServerPlayerEntity player) {
-        //System.out.println("[SleepPunisher] ree " + player.isAlive() + " " + player.isSleeping());
         player.kill();
         player.sendMessage(new LiteralText("\u00A7c[SleepPunisher]: You have died in your dreams..."), false);
     }

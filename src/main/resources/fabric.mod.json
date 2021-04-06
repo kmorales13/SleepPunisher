@@ -4,13 +4,13 @@
   "version": "${version}",
 
   "name": "Sleep Punisher",
-  "description": "It shouldn't be easy to pass the night!",
+  "description": "It shouldn't be easy to skip the night!",
   "authors": [
     "nt_ENX"
   ],
   "contact": {
-    "homepage": "",
-    "sources": ""
+    "homepage": "https://github.com/kmorales13/SleepPunisher",
+    "sources": "https://github.com/kmorales13/SleepPunisher"
   },
 
   "license": "CC0-1.0",
