@@ -1,4 +1,4 @@
-# 🌙 SleepPunisher
+# 🌙 SleepPunisher [Fabric]
 Did you ever feel like sleeping to skip the hard nights was too easy?
 
 With this mod you'll be able to 'punish' players that want to take the easy way out.
