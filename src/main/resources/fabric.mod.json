@@ -2,30 +2,24 @@
   "schemaVersion": 1,
   "id": "sleeppunisher",
   "version": "${version}",
-
   "name": "Sleep Punisher",
   "description": "It shouldn't be easy to skip the night!",
   "authors": [
-    "nt_ENX"
+    "officialENX"
   ],
   "contact": {
-    "homepage": "https://github.com/kmorales13/SleepPunisher",
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/sleeppunisher",
     "sources": "https://github.com/kmorales13/SleepPunisher"
   },
-
   "license": "CC0-1.0",
   "icon": "assets/sleeppunisher/icon.png",
-
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "net.sleeppunisher.SleepPunisher"
-    ]
+    "main": ["net.sleeppunisher.SleepPunisher"]
   },
   "mixins": [
     "sleeppunisher.mixins.json"
   ],
-
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",

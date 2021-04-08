@@ -20,12 +20,14 @@ public class SleepPunisherConfig extends Config {
 
     public static class ConfigGroup extends ConfigItemGroup {
         public ConfigGroup() {
-            super(of(new KillOptions(), new DamageOptions(), new StarveOptions()), "punishments");
+            super(of(new KillOptions(), new DamageOptions(), new StarveOptions(), new TeleportOptions(),
+                    new RaidOptions()), "punishments");
         }
 
         public static class KillOptions extends ConfigItemGroup {
             public static final ConfigItem<Boolean> killEnabled = new ConfigItem<>("enabled", true, "Enabled");
-            public static final ConfigItem<Integer> killProb = new ConfigItem<>("probability", 10, "Percentage probability 1-100");
+            public static final ConfigItem<Integer> killProb = new ConfigItem<>("probability", 5,
+                    "Percentage probability 1-100");
 
             public KillOptions() {
                 super(of(killEnabled, killProb), "killPlayer");
@@ -34,7 +36,8 @@ public class SleepPunisherConfig extends Config {
 
         public static class DamageOptions extends ConfigItemGroup {
             public static final ConfigItem<Boolean> damageEnabled = new ConfigItem<>("enabled", true, "Enabled");
-            public static final ConfigItem<Integer> damageProb = new ConfigItem<>("probability", 20, "Percentage probability 1-100");
+            public static final ConfigItem<Integer> damageProb = new ConfigItem<>("probability", 10,
+                    "Percentage probability 1-100");
 
             public DamageOptions() {
                 super(of(damageEnabled, damageProb), "damagePlayer");
@@ -43,10 +46,35 @@ public class SleepPunisherConfig extends Config {
 
         public static class StarveOptions extends ConfigItemGroup {
             public static final ConfigItem<Boolean> starveEnabled = new ConfigItem<>("enabled", true, "Enabled");
-            public static final ConfigItem<Integer> starveProb = new ConfigItem<>("probability", 30, "Percentage probability 1-100");
+            public static final ConfigItem<Integer> starveProb = new ConfigItem<>("probability", 20,
+                    "Percentage probability 1-100");
 
             public StarveOptions() {
                 super(of(starveEnabled, starveProb), "starvePlayer");
+            }
+        }
+
+        public static class TeleportOptions extends ConfigItemGroup {
+            public static final ConfigItem<Boolean> teleportEnabled = new ConfigItem<>("enabled", true, "Enabled");
+            public static final ConfigItem<Integer> teleportProb = new ConfigItem<>("probability", 15,
+                    "Percentage probability 1-100");
+            public static final ConfigItem<Integer> teleportDistance = new ConfigItem<>("maxDistance", 32,
+                    "Max distance player can sleep walk to");
+
+            public TeleportOptions() {
+                super(of(teleportEnabled, teleportProb, teleportDistance), "teleportPlayer");
+            }
+        }
+
+        public static class RaidOptions extends ConfigItemGroup {
+            public static final ConfigItem<Boolean> raidEnabled = new ConfigItem<>("enabled", true, "Enabled");
+            public static final ConfigItem<Integer> raidProb = new ConfigItem<>("probability", 20,
+                    "Percentage probability 1-100");
+            public static final ConfigItem<Integer> raidEntities = new ConfigItem<>("maxEntities", 3,
+                    "Max entities that can spawn");
+
+            public RaidOptions() {
+                super(of(raidEnabled, raidProb, raidEntities), "raidPlayer");
             }
         }
     }
