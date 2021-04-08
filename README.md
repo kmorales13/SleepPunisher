@@ -4,7 +4,7 @@ Did you ever feel like sleeping to skip the hard nights was too easy?
 With this mod you'll be able to 'punish' players that want to take the easy way out.
 
 ## Features
-🍎 Hunger: Wake up with the hunger bar empty. Better ear fast!
+🍎 Hunger: Wake up with the hunger bar empty. Better eat fast!
 
 🔪 Damage: Wake up confused, with a bunch of bruises and half your health. What just happened?!
 
