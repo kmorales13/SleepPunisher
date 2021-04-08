@@ -15,7 +15,7 @@ Just add the mod to your minecraft instance. After a player sleeps, there is a c
 
 ## Configuration
 The mod adds a sleep_punisher.json file to the configs folder.
-There you will be able to edit the probability of each punishment to happen.
+There you will be able to disable/edit the probability of each punishment to happen.
 
 ## Future Ideas
 Ideally I would like the user to be able to create custom punishments instead of just having them being hardcoded.
