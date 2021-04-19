@@ -10,16 +10,16 @@ import static com.google.common.collect.ImmutableList.of;
 
 public class SleepPunisherConfig extends Config {
 
-    public static final ConfigItemGroup mainGroup = new ConfigGroup();
-    public static final List<ConfigItemGroup> configs = of(mainGroup);
+    public static final ConfigItemGroup punishmentsGroup = new PunishmentsGroup();
+    public static final List<ConfigItemGroup> configs = of(punishmentsGroup);
 
     public SleepPunisherConfig() {
         super(configs, new File(FabricLoader.getInstance().getConfigDir().toFile(), "sleep_punisher.json"),
                 "sleeppunisher");
     }
 
-    public static class ConfigGroup extends ConfigItemGroup {
-        public ConfigGroup() {
+    public static class PunishmentsGroup extends ConfigItemGroup {
+        public PunishmentsGroup() {
             super(of(new KillOptions(), new DamageOptions(), new StarveOptions(), new TeleportOptions(),
                     new RaidOptions()), "punishments");
         }
@@ -70,7 +70,7 @@ public class SleepPunisherConfig extends Config {
             public static final ConfigItem<Boolean> raidEnabled = new ConfigItem<>("enabled", true, "Enabled");
             public static final ConfigItem<Integer> raidProb = new ConfigItem<>("probability", 20,
                     "Percentage probability 1-100");
-            public static final ConfigItem<Integer> raidEntities = new ConfigItem<>("maxEntities", 3,
+            public static final ConfigItem<Integer> raidEntities = new ConfigItem<>("maxEntities", 4,
                     "Max entities that can spawn");
 
             public RaidOptions() {
