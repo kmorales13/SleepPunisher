@@ -188,7 +188,7 @@ public class SleepPunisher implements ModInitializer {
         }
 
         if (isVillage) {
-            player.addStatusEffect(new StatusEffectInstance(StatusEffects.BAD_OMEN, 99999));
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.BAD_OMEN, 999));
         } else {
             ItemStack bowItem = new ItemStack(Items.CROSSBOW);
             Vec3d pos = player.getPos();

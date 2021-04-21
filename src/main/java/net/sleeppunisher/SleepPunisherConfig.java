@@ -36,7 +36,7 @@ public class SleepPunisherConfig extends Config {
 
         public static class DamageOptions extends ConfigItemGroup {
             public static final ConfigItem<Boolean> damageEnabled = new ConfigItem<>("enabled", true, "Enabled");
-            public static final ConfigItem<Integer> damageProb = new ConfigItem<>("probability", 10,
+            public static final ConfigItem<Integer> damageProb = new ConfigItem<>("probability", 5,
                     "Percentage probability 1-100");
 
             public DamageOptions() {
@@ -46,7 +46,7 @@ public class SleepPunisherConfig extends Config {
 
         public static class StarveOptions extends ConfigItemGroup {
             public static final ConfigItem<Boolean> starveEnabled = new ConfigItem<>("enabled", true, "Enabled");
-            public static final ConfigItem<Integer> starveProb = new ConfigItem<>("probability", 20,
+            public static final ConfigItem<Integer> starveProb = new ConfigItem<>("probability", 5,
                     "Percentage probability 1-100");
 
             public StarveOptions() {
@@ -56,7 +56,7 @@ public class SleepPunisherConfig extends Config {
 
         public static class TeleportOptions extends ConfigItemGroup {
             public static final ConfigItem<Boolean> teleportEnabled = new ConfigItem<>("enabled", true, "Enabled");
-            public static final ConfigItem<Integer> teleportProb = new ConfigItem<>("probability", 15,
+            public static final ConfigItem<Integer> teleportProb = new ConfigItem<>("probability", 5,
                     "Percentage probability 1-100");
             public static final ConfigItem<Integer> teleportDistance = new ConfigItem<>("maxDistance", 32,
                     "Max distance player can sleep walk to");
@@ -68,7 +68,7 @@ public class SleepPunisherConfig extends Config {
 
         public static class RaidOptions extends ConfigItemGroup {
             public static final ConfigItem<Boolean> raidEnabled = new ConfigItem<>("enabled", true, "Enabled");
-            public static final ConfigItem<Integer> raidProb = new ConfigItem<>("probability", 10,
+            public static final ConfigItem<Integer> raidProb = new ConfigItem<>("probability", 5,
                     "Percentage probability 1-100");
             public static final ConfigItem<Integer> raidEntities = new ConfigItem<>("maxEntities", 4,
                     "Max entities that can spawn");
@@ -80,7 +80,7 @@ public class SleepPunisherConfig extends Config {
 
         public static class TorchOptions extends ConfigItemGroup {
             public static final ConfigItem<Boolean> torchEnabled = new ConfigItem<>("enabled", true, "Enabled");
-            public static final ConfigItem<Integer> torchProb = new ConfigItem<>("probability", 10,
+            public static final ConfigItem<Integer> torchProb = new ConfigItem<>("probability", 5,
                     "Percentage probability 1-100");
             public static final ConfigItem<Integer> torchRadius = new ConfigItem<>("findRadius", 5,
                     "Block radius 1-10");
