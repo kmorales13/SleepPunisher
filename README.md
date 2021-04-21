@@ -14,6 +14,8 @@ With this mod you'll be able to 'punish' players that want to take the easy way 
 
 ⚔️ Raid: Wake up to the sound of marching Pillagers, better defend yourself!
 
+🔥 Torch: Remember to turn off all smelting before going to bed, or you may wake up to a fire in your house! 
+
 ## Usage
 Just add the mod to your minecraft instance. After a player sleeps, there is a chance they get punished.
 
