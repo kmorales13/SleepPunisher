@@ -11,6 +11,10 @@ import com.oroarmor.config.ConfigItemGroup;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.minecraft.block.AbstractFireBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -22,6 +26,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkSectionPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Heightmap;
@@ -54,6 +59,7 @@ public class SleepPunisher implements ModInitializer {
 
     private void initConfig() {
         CONFIG.readConfigFromFile();
+        CONFIG.saveConfigToFile();
         ServerLifecycleEvents.SERVER_STOPPED.register(instance -> CONFIG.saveConfigToFile());
     }
 
@@ -82,6 +88,7 @@ public class SleepPunisher implements ModInitializer {
             Integer prob = 0;
             try {
                 prob = item.toJson().get("probability").getAsInt();
+                prob = Math.max(0, Math.min(prob, 100));
             } catch (Exception e) {
                 System.out.println(
                         "[SleepPunisher] Error getting probability for '" + item.getName() + "', defaulting to 0");
@@ -121,9 +128,13 @@ public class SleepPunisher implements ModInitializer {
             case "raidPlayer":
                 raidPlayer(player, punishment);
                 break;
+            case "torchPlayer":
+                torchPlayer(player, punishment);
+                break;
             }
         } catch (Exception e) {
-            System.out.println("[SleepPunisher] An error ocurred while trying to punish a player: " + player.getName());
+            System.out.println(
+                    "[SleepPunisher] An error ocurred while trying to punish a player: " + player.getName().asString());
             e.printStackTrace();
         }
     }
@@ -199,5 +210,60 @@ public class SleepPunisher implements ModInitializer {
         }
 
         player.sendMessage(new LiteralText("\u00A7c~Wake up, you are being raided!"), false);
+    }
+
+    private void torchPlayer(ServerPlayerEntity player, ConfigItemGroup config) {
+        ServerWorld world = player.getServerWorld();
+
+        int findRadius = 5;
+        try {
+            findRadius = config.toJson().get("findRadius").getAsInt();
+            findRadius = Math.max(1, Math.min(findRadius, 10));
+        } catch (Exception e) {
+            System.out.println("[SleepPunisher] Error getting findRadius for 'torchPlayer', defaulting to 5");
+        }
+
+        BlockPos bPos = player.getBlockPos();
+        BlockPos torchBlock = null;
+
+        Iterable<BlockPos> findArea = BlockPos.iterateOutwards(bPos, findRadius, findRadius, findRadius);
+        for (BlockPos blockPos : findArea) {
+            try {
+                BlockEntity block = world.getBlockEntity(blockPos);
+                BlockEntityType<?> blockType = block.getType();
+
+                if (blockType == BlockEntityType.FURNACE || blockType == BlockEntityType.BLAST_FURNACE
+                        || blockType == BlockEntityType.SMOKER) {
+                    int lit = block.getCachedState().getLuminance();
+
+                    if (lit > 0) {
+                        torchBlock = blockPos.mutableCopy();
+                        break;
+                    }
+                }
+            } catch (NullPointerException e) {
+            }
+        }
+
+        if (torchBlock != null) {
+            Iterable<BlockPos> torchArea = BlockPos.iterateOutwards(torchBlock, 2, 0, 2);
+
+            player.sendMessage(new LiteralText("\u00A7c~Oh no, you left the stove on!"), false);
+
+            for (BlockPos blockPos : torchArea) {
+                try {
+                    BlockPos.Mutable firePos = blockPos.mutableCopy();
+                    int fireFloor = Math.min(firePos.getY(),
+                            world.getTopY(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, firePos.getX(), firePos.getZ()));
+                    firePos.setY(fireFloor);
+
+                    if (AbstractFireBlock.method_30032(world, firePos, player.getHorizontalFacing())) {
+                        BlockState fireState = AbstractFireBlock.getState(world, firePos);
+                        world.setBlockState(firePos, fireState, 11);
+                    }
+                } catch (Exception e) {
+                }
+            }
+        }
     }
 }

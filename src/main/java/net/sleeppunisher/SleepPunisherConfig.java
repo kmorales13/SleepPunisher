@@ -21,7 +21,7 @@ public class SleepPunisherConfig extends Config {
     public static class PunishmentsGroup extends ConfigItemGroup {
         public PunishmentsGroup() {
             super(of(new KillOptions(), new DamageOptions(), new StarveOptions(), new TeleportOptions(),
-                    new RaidOptions()), "punishments");
+                    new RaidOptions(), new TorchOptions()), "punishments");
         }
 
         public static class KillOptions extends ConfigItemGroup {
@@ -68,13 +68,25 @@ public class SleepPunisherConfig extends Config {
 
         public static class RaidOptions extends ConfigItemGroup {
             public static final ConfigItem<Boolean> raidEnabled = new ConfigItem<>("enabled", true, "Enabled");
-            public static final ConfigItem<Integer> raidProb = new ConfigItem<>("probability", 20,
+            public static final ConfigItem<Integer> raidProb = new ConfigItem<>("probability", 10,
                     "Percentage probability 1-100");
             public static final ConfigItem<Integer> raidEntities = new ConfigItem<>("maxEntities", 4,
                     "Max entities that can spawn");
 
             public RaidOptions() {
                 super(of(raidEnabled, raidProb, raidEntities), "raidPlayer");
+            }
+        }
+
+        public static class TorchOptions extends ConfigItemGroup {
+            public static final ConfigItem<Boolean> torchEnabled = new ConfigItem<>("enabled", true, "Enabled");
+            public static final ConfigItem<Integer> torchProb = new ConfigItem<>("probability", 10,
+                    "Percentage probability 1-100");
+            public static final ConfigItem<Integer> torchRadius = new ConfigItem<>("findRadius", 5,
+                    "Block radius 1-10");
+
+            public TorchOptions() {
+                super(of(torchEnabled, torchProb, torchRadius), "torchPlayer");
             }
         }
     }
