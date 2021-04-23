@@ -16,6 +16,8 @@ With this mod you'll be able to 'punish' players that want to take the easy way 
 
 🔥 Torch: Remember to turn off all smelting before going to bed, or you may wake up to a fire in your house! 
 
+⛈️ Thunder: Wake up to the sounds of a thunderstorm, stay safe!
+
 ## Usage
 Just add the mod to your minecraft instance. After a player sleeps, there is a chance they get punished.
 
