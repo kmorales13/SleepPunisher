@@ -1,5 +1,6 @@
 package net.sleeppunisher;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -11,6 +12,7 @@ import com.oroarmor.config.ConfigItemGroup;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -41,6 +43,7 @@ public class SleepPunisher implements ModInitializer {
     private List<ConfigItem<?>> punishments;
 
     private Random rand = new Random();
+    private boolean runThunder = false;
 
     @Override
     public void onInitialize() {
@@ -110,28 +113,13 @@ public class SleepPunisher implements ModInitializer {
         Integer index = Probability.randNum(inx.toArray(new Integer[0]), freqs.toArray(new Integer[0]), inx.size());
 
         try {
-            ConfigItemGroup punishment = (ConfigItemGroup) punishments.get(index);
+            ConfigItemGroup config = (ConfigItemGroup) punishments.get(index);
 
-            switch (punishment.getName()) {
-            case "killPlayer":
-                killPlayer(player);
-                break;
-            case "starvePlayer":
-                starvePlayer(player);
-                break;
-            case "damagePlayer":
-                damagePlayer(player);
-                break;
-            case "teleportPlayer":
-                teleportPlayer(player, punishment);
-                break;
-            case "raidPlayer":
-                raidPlayer(player, punishment);
-                break;
-            case "torchPlayer":
-                torchPlayer(player, punishment);
-                break;
-            }
+            Method method = getClass().getDeclaredMethod(config.getName(), ServerPlayerEntity.class,
+                    ConfigItemGroup.class);
+            method.invoke(this, player, config);
+        } catch (ArrayIndexOutOfBoundsException ae) {
+            return;
         } catch (Exception e) {
             System.out.println(
                     "[SleepPunisher] An error ocurred while trying to punish a player: " + player.getName().asString());
@@ -139,23 +127,27 @@ public class SleepPunisher implements ModInitializer {
         }
     }
 
-    private void killPlayer(ServerPlayerEntity player) {
+    @SuppressWarnings("unused")
+    private void killPlayer(ServerPlayerEntity player, ConfigItemGroup config) {
         player.setSpawnPoint(player.getSpawnPointDimension(), null, 0, false, false);
         player.kill();
         player.sendMessage(new LiteralText("\u00A7c~You have died in your dreams and are back where you started..."),
                 false);
     }
 
-    private void starvePlayer(ServerPlayerEntity player) {
+    @SuppressWarnings("unused")
+    private void starvePlayer(ServerPlayerEntity player, ConfigItemGroup config) {
         player.getHungerManager().setFoodLevel(0);
         player.sendMessage(new LiteralText("\u00A7c~You slept for too long and are now starving..."), false);
     }
 
-    private void damagePlayer(ServerPlayerEntity player) {
+    @SuppressWarnings("unused")
+    private void damagePlayer(ServerPlayerEntity player, ConfigItemGroup config) {
         player.setHealth(player.getMaxHealth() / 2f);
         player.sendMessage(new LiteralText("\u00A7c~You have awoken with bruises, what happened?"), false);
     }
 
+    @SuppressWarnings("unused")
     private void teleportPlayer(ServerPlayerEntity player, ConfigItemGroup config) {
         Vec3d pos = player.getPos();
         int maxDistance;
@@ -175,6 +167,7 @@ public class SleepPunisher implements ModInitializer {
         player.sendMessage(new LiteralText("\u00A7c~You have walked away from bed on your sleep, be careful!"), false);
     }
 
+    @SuppressWarnings("unused")
     private void raidPlayer(ServerPlayerEntity player, ConfigItemGroup config) {
         ServerWorld world = player.getServerWorld();
 
@@ -212,7 +205,8 @@ public class SleepPunisher implements ModInitializer {
         player.sendMessage(new LiteralText("\u00A7c~Wake up, you are being raided!"), false);
     }
 
-    private void torchPlayer(ServerPlayerEntity player, ConfigItemGroup config) {
+    @SuppressWarnings("unused")
+    private void stoveFire(ServerPlayerEntity player, ConfigItemGroup config) {
         ServerWorld world = player.getServerWorld();
 
         int findRadius = 5;
@@ -220,7 +214,7 @@ public class SleepPunisher implements ModInitializer {
             findRadius = config.toJson().get("findRadius").getAsInt();
             findRadius = Math.max(1, Math.min(findRadius, 10));
         } catch (Exception e) {
-            System.out.println("[SleepPunisher] Error getting findRadius for 'torchPlayer', defaulting to 5");
+            System.out.println("[SleepPunisher] Error getting findRadius for 'stoveFire', defaulting to 5");
         }
 
         BlockPos bPos = player.getBlockPos();
@@ -265,5 +259,19 @@ public class SleepPunisher implements ModInitializer {
                 }
             }
         }
+    }
+
+    @SuppressWarnings("unused")
+    private void thunderWeather(ServerPlayerEntity player, ConfigItemGroup config) {
+        ServerWorld world = player.getServerWorld();
+        runThunder = true;
+
+        ServerTickEvents.END_SERVER_TICK.register(server -> {
+            if (runThunder) {
+                world.setWeather(0, 6000, true, true);
+                player.sendMessage(new LiteralText("\u00A7c~You have awoken to the sounds of thunder..."), false);
+                runThunder = false;
+            }
+        });
     }
 }

@@ -21,7 +21,7 @@ public class SleepPunisherConfig extends Config {
     public static class PunishmentsGroup extends ConfigItemGroup {
         public PunishmentsGroup() {
             super(of(new KillOptions(), new DamageOptions(), new StarveOptions(), new TeleportOptions(),
-                    new RaidOptions(), new TorchOptions()), "punishments");
+                    new RaidOptions(), new StoveOptions(), new ThunderOptions()), "punishments");
         }
 
         public static class KillOptions extends ConfigItemGroup {
@@ -78,15 +78,25 @@ public class SleepPunisherConfig extends Config {
             }
         }
 
-        public static class TorchOptions extends ConfigItemGroup {
-            public static final ConfigItem<Boolean> torchEnabled = new ConfigItem<>("enabled", true, "Enabled");
-            public static final ConfigItem<Integer> torchProb = new ConfigItem<>("probability", 5,
+        public static class StoveOptions extends ConfigItemGroup {
+            public static final ConfigItem<Boolean> stoveEnabled = new ConfigItem<>("enabled", true, "Enabled");
+            public static final ConfigItem<Integer> stoveProb = new ConfigItem<>("probability", 5,
                     "Percentage probability 1-100");
-            public static final ConfigItem<Integer> torchRadius = new ConfigItem<>("findRadius", 5,
+            public static final ConfigItem<Integer> stoveRadius = new ConfigItem<>("findRadius", 5,
                     "Block radius 1-10");
 
-            public TorchOptions() {
-                super(of(torchEnabled, torchProb, torchRadius), "torchPlayer");
+            public StoveOptions() {
+                super(of(stoveEnabled, stoveProb, stoveRadius), "stoveFire");
+            }
+        }
+
+        public static class ThunderOptions extends ConfigItemGroup {
+            public static final ConfigItem<Boolean> thunderEnabled = new ConfigItem<>("enabled", true, "Enabled");
+            public static final ConfigItem<Integer> thunderProb = new ConfigItem<>("probability", 5,
+                    "Percentage probability 1-100");
+
+            public ThunderOptions() {
+                super(of(thunderEnabled, thunderProb), "thunderWeather");
             }
         }
     }
